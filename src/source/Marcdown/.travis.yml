@@ -1,0 +1,15 @@
+language: cpp
+sudo: false
+os: linux
+compiler: gcc
+addons:
+  apt:
+    sources:
+      - george-edison55-precise-backports
+    packages:
+      - cmake-data
+      - cmake
+script:
+  -cd /cmake
+  -cmake ../
+  

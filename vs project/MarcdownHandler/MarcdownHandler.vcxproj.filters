@@ -15,12 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\source\Marcdown\md_main.cpp">
+    <ClCompile Include="..\..\src\main.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mdObjectsList.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\include\Marcdown\mdHandler.h">
+    <ClInclude Include="..\..\src\mdObjectsList.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
