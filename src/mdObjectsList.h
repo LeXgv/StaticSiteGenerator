@@ -9,16 +9,21 @@ Creating linked list of object
 */
 class mdObjectsList
 {
-private:
+protected:
 	/**
 	enum type objects markdown format
 	*/
-	enum type_el {TEXT, H1, H2, H3, H4, H5, STRIKE, BOLD, ITALIC, LISTING, TABLE, URL, YOUTUBE, QUOTE};
+	enum type_el {NONE, TEXT,
+		/*FORM*/H1, H2, H3, H4, H5, H6, STRIKE, BOLD, ITALIC, TABLE, QUOTE, LIST, NUMLIST, HRULES,
+		/*CODE*/ INLINE, LISTING, COMMENTS, 
+		/*LINK*/ URL, YOUTUBE, IMG};
+	//enum group_t {NONE, FORM, CODE, LINK, };
+	struct elSyntax { bool is; char s; };
 	struct node
 	{
 		type_el type;
 		node *near;
-		void *inner; //pointer type depende from value "type"
+		node *inner; //pointer type depende from value "type"
 		/**
 		if type == TEXT || type == LISTING that
 		inner -> std::string
@@ -27,6 +32,7 @@ private:
 		*/
 	};
 	node *head;
+	node *last;
 public:
 	/**
 	 Creating empty list
@@ -38,15 +44,34 @@ public:
 	mdObjectsList(std::string str);
 
 
-private:
+protected:
 	/**
-	This function returning type the passed string in the format 'Markdown'
+	Function define: whether the symbol is the starting symbol of the key word
 	*/
-	getTypeMdStr(int i)
+	//group_t isStartingTerm(char s);
+	elSyntax isSyntaxStruc(std::string::iterator i, std::string::iterator end);
+	/**
+	function perform building syntax tree for markup language 'Markdown'
+	prametrs:
+		node *&p - pointer which must will pointing to root, In this pointer will be recordered addres to memory
+		std::string::iterator start - iterator the beginning of the string
+		std::string::iterator end - iterator the ending of the string
+	return:
+		std::string::iterator - iterator the ending of the string which finished work
+	*/
+	std::string::iterator creator(node *&p, std::string::iterator start, std::string::iterator end);
+	/**
+	This type is designed in order to the function can will returning several value:
+	type_el t - object type that is contained in the string
+	std::string::iterator inStart - 
+	std::string::iterator inEnd - start description a object (inside elements, without syntax of this object)
+	*/
+	struct tvalue { type_el t;  std::string::iterator inStart; std::string::iterator inEnd; };
+	tvalue getTypeMdStr(std::string::iterator i);
 	/**
 	Function recognizing headers
 	*/
-	void header(int indx);
+	tvalue header(std::string::iterator start, std::string::iterator end);
 	/**
 	Function recognizing comments
 	*/

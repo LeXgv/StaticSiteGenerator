@@ -1,4 +1,3 @@
-﻿  md_main.cpp
-  mdObjectsList.cpp
-  Создание кода...
+﻿  mdObjectsList.cpp
+d:\project_cpp\static site generator\src\mdobjectslist.cpp(95): warning C4715: mdObjectsList::creator: значение возвращается не при всех путях выполнения
   MarcdownHandler.vcxproj -> D:\project_cpp\Static Site Generator\vs project\stat_site_gen\Debug\MarcdownHandler.exe
