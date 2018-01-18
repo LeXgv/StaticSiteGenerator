@@ -103,8 +103,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)/../../src;$(VC_IncludePath);$(WindowsSDK_IncludePath);D:\project_cpp\Static Site Generator\src</IncludePath>
-    <SourcePath>$(ProjectDir).../.../src;$(VC_SourcePath);</SourcePath>
+    <IncludePath>$(ProjectDir)/../../tests;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)/../../src</IncludePath>
+    <SourcePath>$(ProjectDir).../.../tests;$(VC_SourcePath);$(ProjectDir)/../../src</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -216,6 +216,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\mdObjectsList.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarcdownHandler\MarcdownHandler.vcxproj">
+      <Project>{870d1ee0-5b56-4e7b-ab85-ece75b145e9d}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

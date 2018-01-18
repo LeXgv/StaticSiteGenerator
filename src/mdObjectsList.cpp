@@ -37,18 +37,44 @@ mdObjectsList::mdObjectsList(std::string str)
 */
 mdObjectsList::elSyntax mdObjectsList::isSyntaxStruc(std::string::iterator i, std::string::iterator end)
 {
-	char syntax[] = { '*', '~',  '_',  '`' };
-	for (int j = 0; j < 9; j++)
-	{
-		if (syntax[j] == *i) return { true, syntax[j] };
-	}
+	if (i == end) return { false, -1 };
+
+	
 	if ((*i == '\n') && ((++i) < end))
 	{
+		//this syntax constructions can will meet in string after symbol \n
+		if(*i == '\t') return { true, '\t' };
+		int counting_space = 0;
+		while (*i == ' ' && counting_space <= 3)
+		{
+			i++;
+			counting_space++;
+			if(i == end) return {false, 0};// returned with 0 because forward argument does not eaqual end iterator
+		}
+		i++;
+		if (i != end && *i == ' ')  return { true, '\t' };//this code block
+		if (*i >= '0' && *i <= '9')
+		{
+			//if we is meet number that we must check next symbol
+			//if next symbol is dot and after dote go space that
+			//before us syntax construction for object numeric list
+
+			if (i < end && *(++i) == '.')
+			{
+				//if(i < end )
+			}
+		}
 		char syntax2[] = { '#', '*', '~', '>', '_', '-', '`', '|' };
 		for (int j = 0; j < 9; j++)
 		{
-			if (syntax2[j] == *i) return { true, syntax[j] };
+			if (syntax2[j] == *i) return { true, syntax2[j] };
 		}
+	}
+	//this syntax constructions can will meet in any place string
+	char syntax[] = { '*', '~',  '_',  '`' };
+	for (int j = 0; j < 4; j++)
+	{
+		if (syntax[j] == *i) return { true, syntax[j] };
 	}
 	return { false, 0 };
 }
@@ -102,16 +128,26 @@ mdObjectsList::tvalue mdObjectsList::header(std::string::iterator start, std::st
 		// define type header
 		type_el  header_type = NONE;
 		int count_hash = 0;
-		while (*i == '#' && count_hash <= 7)
+		while (i < end && *i == '#' && count_hash <= 7)
 		{
 			count_hash++;
 			i++;
 		}
+		if (i == end) return { TEXT, start, i };
 		//if after hash do not folow space bar that this is TEXT.
 		//or number hash more then 6 
 		if (*i != ' ' || count_hash == 7)
 		{
-			while (!(isSyntaxStruc(i, end).is)) i++;
+			//before us string containing object of type text
+			//we add symbols in object until we will meet syntax symbol
+			elSyntax t = isSyntaxStruc(i, end);
+			while (!(t.is) && t.s != -1)
+			{
+				//if t.is == false that t.s == 0 if iterator != end
+				//if iterator == end that t.s == -1
+				i++;
+				t = isSyntaxStruc(i, end);
+			}
 			return {TEXT, start, i};
 		}
 		else
@@ -119,9 +155,12 @@ mdObjectsList::tvalue mdObjectsList::header(std::string::iterator start, std::st
 			i++;
 			std::string::iterator s = i;
 			//after hash going space. this is HEADER
-			header_type = static_cast<type_el>(count_hash + 1);//TODO check conformity with type
-			while (*i != '\n' && i < end) i++;
-			return { header_type, start, i };
+			tvalue res;
+			res.t = static_cast<type_el>(count_hash + 1);//TODO check conformity with type
+			res.inStart = i;
+			while (i < end && *i != '\n') i++;
+			res.inEnd = i;
+			return res;
 		}
 
 }

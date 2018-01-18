@@ -1,2 +1,4 @@
-﻿  test_mdObjectsList.cpp
-d:\project_cpp\static site generator\tests\test_mdobjectslist.cpp(4): fatal error C1010: непредвиденный конец файла во время поиска предкомпилированного заголовка. Возможно, вы забыли добавить директиву "#include "stdafx.h"" в источник.
+﻿  Test_Markdown.cpp
+  test_mdObjectsList.cpp
+  Создание кода...
+  Test_Markdown.vcxproj -> D:\project_cpp\Static Site Generator\vs project\stat_site_gen\Test\Test_Markdown.exe
