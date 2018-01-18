@@ -43,7 +43,8 @@ mdObjectsList::elSyntax mdObjectsList::isSyntaxStruc(std::string::iterator i, st
 	if ((*i == '\n') && ((++i) < end))
 	{
 		//this syntax constructions can will meet in string after symbol \n
-		if(*i == '\t') return { true, '\t' };
+		if(*i == '\t') return { true, '\t' }; // this code block
+
 		int counting_space = 0;
 		while (*i == ' ' && counting_space <= 3)
 		{
@@ -51,19 +52,27 @@ mdObjectsList::elSyntax mdObjectsList::isSyntaxStruc(std::string::iterator i, st
 			counting_space++;
 			if(i == end) return {false, 0};// returned with 0 because forward argument does not eaqual end iterator
 		}
-		i++;
-		if (i != end && *i == ' ')  return { true, '\t' };//this code block
+		//i++;
+		if (i == end) return { false, 0 };
+		if (*i == ' ')  return { true, '\t' };//this code block - rewrite!
 		if (*i >= '0' && *i <= '9')
 		{
-			//if we is meet number that we must check next symbol
+			//if we is meet number  that we must check next symbol
 			//if next symbol is dot and after dote go space that
 			//before us syntax construction for object numeric list
 
 			if (i < end && *(++i) == '.')
 			{
-				//if(i < end )
+				if (i < end  && *(++i) == ' ') return { true, '1' };
 			}
 		}
+			if ( *i == '+' || *i == '-' || *i == '*')
+			{
+				//if we is meet +, -, * that we must check next symbol
+				//if next symbol is space that
+				//before us syntax construction for object list
+					if (i < end  && *(++i) == ' ') return { true, '+' };
+			}
 		char syntax2[] = { '#', '*', '~', '>', '_', '-', '`', '|' };
 		for (int j = 0; j < 9; j++)
 		{

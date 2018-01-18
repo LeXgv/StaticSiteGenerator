@@ -122,15 +122,32 @@ public:
 
 	void isSyntaxStruc_t1()
 	{
+		std::cout << "___testing method mdObjectsList::isSyntaxStruc___\n";
 		std::string str1 = "\n1. text";
 		elSyntax r1 = isSyntaxStruc(str1.begin(), str1.end());
 		if (r1.is == true && r1.s == '1')
 		{
-			std::cout << "test 9: Done\n";
+			std::cout << "test 1: Done\n";
 		}
 		else
 		{
-			std::cout << "test 9: Failed\n";
+			std::cout << "test 1: Failed\n";
+			std::cout << "\t\tExpectation: is = true, s = 1\n" << "\t\tActuality: is = " 
+				<< r1.is << " s = " << r1.s << std::endl;
+		}
+
+		//test2
+		 str1 = "\ttexteayey3T";
+		 r1 = isSyntaxStruc(str1.begin(), str1.end());
+		if (r1.is == true && r1.s == '\t')
+		{
+			std::cout << "test 2: Done\n";
+		}
+		else
+		{
+			std::cout << "test 1: Failed\n";
+			std::cout << "\t\tExpectation: is = true, s = <tab>\n" << "\t\tActuality: is = "
+				<< r1.is << " s = " << r1.s << std::endl;
 		}
 	}
 };
